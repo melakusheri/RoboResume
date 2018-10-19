@@ -26,9 +26,13 @@ public class ResumeMaker {
             String name = input.nextLine();
             System.out.println("Your E-Mail Adrress:");
             String email = input.nextLine();
-       //  Set the name and email variables to the new object person
+            System.out.println("Your Phone Number:");
+            String phoneNumber = input.nextLine();
+       //  Set the name and email and phone number variables to the new object person
             person.setName(name);
             person.setEmail(email);
+            person.setPhoneNumber(phoneNumber);
+
             System.out.println("Do you have any Educational Background?(Yes/No)");
             String anyEducation = "";
             anyEducation = input.nextLine();
@@ -169,7 +173,7 @@ public class ResumeMaker {
     public void printAll(ArrayList<Person> jobSeekers) {
         for (Person eachPerson : jobSeekers) {
             System.out.println("==============================================================================================");
-            System.out.println(eachPerson.getName() + "\n" + eachPerson.getEmail() + "\n");
+            System.out.println(eachPerson.getName() + "\n" + eachPerson.getEmail() +"\n"+ eachPerson.getPhoneNumber()+"\n");
            if (eachPerson.getEducations().isEmpty()){
                System.out.println("No Educational BackGround");
            }
@@ -206,5 +210,6 @@ public class ResumeMaker {
            }
 
         }
+
     }
 }
