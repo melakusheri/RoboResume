@@ -1,5 +1,6 @@
 package com.sebli;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -63,7 +64,12 @@ public class ResumeMaker {
             anyOtherPerson=input.nextLine();
         } while (anyOtherPerson.equalsIgnoreCase("yes"));
     //call the printAll method to print all resumes
-        printAll(jobSeekers);
+
+        try {
+            printAll(jobSeekers);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -170,46 +176,70 @@ public class ResumeMaker {
         } while (anySkills.equalsIgnoreCase("Yes"));
     }
 
-    public void printAll(ArrayList<Person> jobSeekers) {
+    public void printAll(ArrayList<Person> jobSeekers) throws IOException {
+        FileWriter fileWriter = new FileWriter("resume.txt");
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+
+
         for (Person eachPerson : jobSeekers) {
+            printWriter.println("==============================================================================================");
             System.out.println("==============================================================================================");
+            printWriter.println(eachPerson.getName() + "\n" + eachPerson.getEmail() +"\n"+ eachPerson.getPhoneNumber()+"\n");
             System.out.println(eachPerson.getName() + "\n" + eachPerson.getEmail() +"\n"+ eachPerson.getPhoneNumber()+"\n");
            if (eachPerson.getEducations().isEmpty()){
+               printWriter.println("No Educational BackGround");
                System.out.println("No Educational BackGround");
+
            }
            else {
+               printWriter.println("**Education**");
                System.out.println("**Education**");
                for (Education edu : eachPerson.getEducations()) {
+                   printWriter.println(edu.getField() + ",\n" + edu.getNameOfSchool() + "," + edu.getYearOfGrad() + "\n");
                    System.out.println(edu.getField() + ",\n" + edu.getNameOfSchool() + "," + edu.getYearOfGrad() + "\n");
                }
            }
+
            if (eachPerson.getExperiences().isEmpty()){
+               printWriter.println("Zero Experience");
                System.out.println("Zero Experience ");
            }
            else {
+               printWriter.println("**Experience**");
                System.out.println("**Experience**");
 
                for (Experience ex : eachPerson.getExperiences()) {
+                   printWriter.println(ex.getPosition() + "\n" + ex.getCompanyName() + "," + "From " + ex.getFromDate() +
+                           " - " + ex.getToDate());
+
                    System.out.println(ex.getPosition() + "\n" + ex.getCompanyName() + "," + "From " + ex.getFromDate() +
                            " - " + ex.getToDate());
                    for (String duty : ex.getDuty()) {
                        int count = 1;
+                       printWriter.println("\tDuty" + count + ". " + duty);
                        System.out.println("\tDuty" + count + ". " + duty);
                        count++;
                    }
                }
            }
            if (eachPerson.getSkills().isEmpty()){
+               printWriter.println("No Skills");
                System.out.println("No Skills");
            }
            else {
+               printWriter.println("\n**Skills**");
                System.out.println("\n**Skills**");
                for (Skill sk : eachPerson.getSkills()) {
+                   printWriter.println(sk.getSkills() + "," + sk.getRating());
                    System.out.println(sk.getSkills() + "," + sk.getRating());
                }
            }
+            printWriter.close();
 
         }
 
     }
-}
+
+
+    }
+
